@@ -6,10 +6,6 @@
 </template>
 
 <script>
-  /**
-   * Functional SkeletonBox: based on https://github.com/maoberlehner/skeleton-loading-animation-with-vue
-   * MIT license
-   */
 	export default {
 		name: 'SkeletonBox',
 		functional: true,
