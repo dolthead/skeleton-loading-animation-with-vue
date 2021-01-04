@@ -1,69 +1,73 @@
-<template>
-  <span
-    :style="{ height, width: computedWidth }"
-    class="SkeletonBox"
-  />
+<template functional>
+	<span
+		:style="{ height: props.height, width: $options.computedWidth(props) }"
+		class="skeleton-box"
+	/>
 </template>
 
 <script>
-export default {
-  name: `SkeletonBox`,
-  props: {
-    maxWidth: {
-      default: 100,
-      type: Number,
-    },
-    minWidth: {
-      default: 80,
-      type: Number,
-    },
-    height: {
-      default: `1em`,
-      type: String,
-    },
-    width: {
-      default: null,
-      type: String,
-    },
-  },
-  computed: {
-    computedWidth() {
-      return this.width || `${Math.floor((Math.random() * (this.maxWidth - this.minWidth)) + this.minWidth)}%`;
-    },
-  },
-};
+  /**
+   * Functional SkeletonBox: based on https://github.com/maoberlehner/skeleton-loading-animation-with-vue
+   * MIT license
+   */
+	export default {
+		name: 'SkeletonBox',
+		functional: true,
+		props: {
+			maxWidth: {
+				default: 100,
+				type: Number,
+			},
+			minWidth: {
+				default: 80,
+				type: Number,
+			},
+			height: {
+				default: '1em',
+				type: String,
+			},
+			width: {
+				default: null,
+				type: String,
+			},
+		},
+		computedWidth(props) {
+			return props.width || `${ Math.floor((Math.random() * (props.maxWidth - props.minWidth)) + props.minWidth) }%`;
+		},
+	};
 </script>
 
-<style lang="scss">
-.SkeletonBox {
+<style scoped>
+.skeleton-box {
   display: inline-block;
   position: relative;
   vertical-align: middle;
   overflow: hidden;
-  background-color: #DDDBDD;
+  background-color: transparent;
+  border-radius: 2px;
+}
 
-  &::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transform: translateX(-100%);
-    background-image: linear-gradient(
+.skeleton-box::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
       90deg,
-      rgba(#fff, 0) 0,
-      rgba(#fff, 0.2) 20%,
-      rgba(#fff, 0.5) 60%,
-      rgba(#fff, 0)
-    );
-    animation: shimmer 5s infinite;
-    content: '';
-  }
+      rgba(200, 200, 200, 0) 0,
+      rgba(200, 200, 200, 0.2) 20%,
+      rgba(200, 200, 200, 0.5) 60%,
+      rgba(200, 200, 200, 0)
+  );
+  animation: shimmer 1s infinite;
+  content: '';
+}
 
-  @keyframes shimmer {
-    100% {
-      transform: translateX(100%);
-    }
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }
 </style>
